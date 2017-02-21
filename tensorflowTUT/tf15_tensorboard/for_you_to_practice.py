@@ -50,7 +50,10 @@ with tf.name_scope('train'):
     train_step = tf.train.GradientDescentOptimizer(0.1).minimize(loss)
 
 sess = tf.Session()
-writer = tf.train.SummaryWriter("logs/", sess.graph)
+if int((tf.__version__).split('.')[1]) < 12:
+    writer = tf.train.SummaryWriter("logs/", sess.graph)
+else
+    writer = tf.summary.FileWriter("logs/", sess.graph)
 # important step
 # tf.initialize_all_variables() no long valid from
 # 2017-03-02 if using tensorflow >= 0.12
